@@ -1,0 +1,138 @@
+<ng-template #newProduct let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Adicionar Produto</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="produtoDesc">Descrição do Produto</label>
+        <input type="text" class="form-control" id="produtoDesc" placeholder="Camiseta Alice In Chains">
+      </div>
+      <div class="form-group">
+        <label class="my-1 mr-2" for="produtoMarca">Selecione Marca</label>
+        <select class="custom-select my-1 mr-sm-2" id="produtoMarca">
+          <option selected>Escolha...</option>
+          <option *ngFor="let b of brands" value="{{b.id}}">{{b.desc}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="my-1 mr-2" for="produtoCategoria">Selecione Categoria</label>
+        <select class="custom-select my-1 mr-sm-2" id="produtoCategoria">
+          <option selected>Escolha...</option>
+          <option *ngFor="let c of categories" value="{{c.id}}">{{c.desc}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="produtoQtd">Quantidade em Estoque</label>
+        <input type="number" class="form-control" id="produtoQtd" placeholder="100">
+      </div>
+      <div class="form-group">
+        <label for="produtoPreco">Preço Unidade (R$)</label>
+        <input type="number" class="form-control" id="produtoPreco" placeholder="100">
+      </div>
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="produtoImg">
+        <label class="custom-file-label" for="produtoImg">Choose file</label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-success">Adicionar</button>
+  </div>
+</ng-template>
+
+<ng-template #modal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Adicionar Produto</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="produtoDesc">Descrição do Produto</label>
+        <input type="text" class="form-control" id="produtoDesc" placeholder="Camiseta Alice In Chains" value="{{productEdit.desc}}">
+      </div>
+      <div class="form-group">
+        <label class="my-1 mr-2" for="produtoMarca">Selecione Marca</label>
+        <select class="custom-select my-1 mr-sm-2" id="produtoMarca">
+          <option selected value="{{productEdit.brands[0].id}}">{{productEdit.brands[0].desc}}</option>
+          <option *ngFor="let b of brands" value="{{b.id}}">{{b.desc}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="my-1 mr-2" for="produtoCategoria">Selecione Categoria</label>
+        <select class="custom-select my-1 mr-sm-2" id="produtoCategoria">
+          <option selected value="{{productEdit.categories[0].id}}">{{productEdit.categories[0].desc}}</option>
+          <option *ngFor="let c of categories" value="{{c.id}}">{{c.desc}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="produtoQtd">Quantidade em Estoque</label>
+        <input type="number" class="form-control" id="produtoQtd" placeholder="100" value="{{productEdit.qtd}}">
+      </div>
+      <div class="form-group">
+        <label for="produtoPreco">Preço Unidade (R$)</label>
+        <input type="number" class="form-control" id="produtoPreco" placeholder="100" value="{{productEdit.value}}">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-success">Adicionar</button>
+  </div>
+</ng-template>
+
+<div class="row">
+  <div class="col-md-2">
+    <button class="btn btn-outline-success" style="height: 50px; width: 50px;" placement="bottom" ngbTooltip="Adicionar Produto"
+      (click)="open(newProduct)">
+      <i class="material-icons" style="margin-top: 7px;">add</i>
+    </button>
+  </div>
+</div>
+
+<div class="row my-5 mx-3">
+  <table class="table table-striped bg-white">
+    <thead class="thead">
+      <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Produto</th>
+        <th scope="col">Marca</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Qtd.</th>
+        <th scope="col">Preço</th>
+        <th scope="col"></th>
+        <!-- <th scope="col">Imagem</th> -->
+        <!-- <th scope="col">ImagemNome</th>
+<th scope="col">ImagemDescrição</th>
+<th scope="col">ImagemPath</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of products">
+        <td>{{p.id}}</td>
+        <td>{{p.desc}}</td>
+        <td>{{p.brands[0].desc}}</td>
+        <td>{{p.categories[0].desc}}</td>
+        <td>{{p.qtd}}</td>
+        <td>{{p.value}}</td>
+        <td>
+          <button class="btn btn-outline-danger mr-2 float-right" style="height: 30px; width: 30px; padding: 0; line-height: 40px; font-size: 14px !important;"
+            placement="bottom" ngbTooltip="Excluir Categoria" (click)="delete(p.id)">
+            <i class="material-icons">delete</i>
+          </button>
+          <button class="btn btn-outline-primary mr-2 float-right" style="height: 30px; width: 30px; padding: 0; line-height: 40px; font-size: 14px !important;"
+            placement="bottom" ngbTooltip="Editar Categoria" (click)="edit(p.id,modal)">
+            <i class="material-icons">edit</i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

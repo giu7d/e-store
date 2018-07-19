@@ -1,0 +1,75 @@
+<ng-template #newBrand let-c="close" let-d="dismiss">
+  <form id="addBrandForm" (ngSubmit)="addBrand(addBrandForm)" #addBrandForm="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title">Adicionar Marca</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="mar_descricao">Nome da Marca</label>
+        <input type="text" class="form-control" id="mar_descricao" name="mar_descricao" placeholder="Ex: Adidas, Nike" ngModel required>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="c('Close click')">Close</button>
+      <button type="submit" class="btn btn-success">Adicionar</button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #modal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Editar Marca</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="brandDesc">Nome da Marca</label>
+        <input type="text" class="form-control" id="brandDesc" placeholder="Ex: Adidas, Nike" value="{{brandEdit[0].mar_descricao}}">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-success">Adicionar</button>
+  </div>
+</ng-template>
+
+<div class="row">
+  <div class="col-md-2">
+    <button class="btn btn-outline-success" style="height: 50px; width: 50px;" placement="bottom" ngbTooltip="Adicionar Marca"
+      (click)="open(newBrand)">
+      <i class="material-icons" style="margin-top: 7px;">add</i>
+    </button>
+  </div>
+</div>
+<div class="row my-5 mx-3">
+  <table class="table table-striped bg-white">
+    <thead class="thead">
+      <tr>
+        <th scope="col">Marcas</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let b of brands">
+        <td>{{b.mar_descricao}}</td>
+        <td>
+          <button class="btn btn-outline-danger mr-2 float-right" style="height: 30px; width: 30px; padding: 0; line-height: 40px; font-size: 14px !important;"
+            placement="bottom" ngbTooltip="Excluir Marca" (click)="deleteBrand(b.mar_codigo)">
+            <i class="material-icons">delete</i>
+          </button>
+          <button class="btn btn-outline-primary mr-2 float-right" style="height: 30px; width: 30px; padding: 0; line-height: 40px; font-size: 14px !important;"
+            placement="bottom" ngbTooltip="Editar Marca" (click)="edit(b.mar_codigo, modal)">
+            <i class="material-icons">edit</i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
